@@ -1,0 +1,58 @@
+Q1. Create a report that shows the ContactName, CompanyName, ContactTitle and Phone number from the customers table sorted by Phone.
+SELECT ContactName, CompanyName, ContactTitle, Phone
+FROM Customers
+ORDER BY Phone;
+
+2. Create a report that shows the top 10 OrderlD, OrderDate, Shipped Date, CustomerlD, Freight from the orders table sorted by Freight in descending order.
+SELECT id, OrderDate, ShippedDate, CustomerID, Freight
+FROM Orders
+ORDER BY Freight DESC
+LIMIT 10;
+
+3. Create a report that shows the City, CompanyName, ContactName of customers from cities that has letter L in the name sorted by ContactName.
+SELECT City, CompanyName, ContactName
+FROM customers
+WHERE City LIKE '%L%'
+ORDER BY ContactName;
+
+4. Create a report showing OrderlD, total number of Order ID as NumberofOrders from the orderdetails table grouped by OrderlD and sorted by NumberofOrders in descending order.
+SELECT OrderID, COUNT(*) AS NumberofOrders
+FROM order_details
+GROUP BY OrderID
+ORDER BY NumberofOrders DESC;
+
+5. Create a report that shows the ShipPostalCode, OrderlD, OrderDate, RequiredDate, Shipped Date, ShipAddress of all orders with ShipPostalCode beginning with "98124".
+SELECT ShipPostalCode, id, OrderDate, RequiredDate, ShippedDate, ShipAddress
+FROM Orders
+WHERE ShipPostalCode LIKE '98124%'
+
+6. Create a report that shows the LastName, FirstName, City of employees in cities other "Seattle".
+SELECT LastName, FirstName, City
+FROM employees
+WHERE City <> 'Seattle'
+
+7. Create a report that shows the average UnitPrice rounded to the next whole number, total price of UnitslnStock and maximum number of orders from the products table. All saved as AveragePrice, TotalStock and MaxOrder respectively
+SELECT
+    CEILING(AVG(UnitPrice)) AS AveragePrice,
+    SUM(UnitPrice * UnitsInStock) AS TotalStock,
+    MAX(UnitsOnOrder) AS MaxOrder
+FROM products;
+
+8. Create a report that shows the SupplierlD, ProductName, CompanyName from all product Supplied by "Exotic Liquids", "Specialty Biscuits, Ltd.", "Escargots Nouveaux", sorted by the supplier ID.
+SELECT p.SupplierID, p.ProductName, s.CompanyName
+FROM Products p
+JOIN Suppliers s ON p.SupplierID = s.id
+WHERE s.CompanyName IN ('Exotic Liquids', 'Specialty Biscuits, Ltd', 'Escargots Nouveaux')
+ORDER BY p.SupplierID;
+
+9. Create a report that shows the SupplierlD, CompanyName, CategoryName, ProductName and UnitPrice from the products, suppliers and categories table
+SELECT p.SupplierID, s.CompanyName, c.CategoryName, p.ProductName, p.UnitPrice
+FROM products p
+JOIN suppliers s ON p.SupplierID = s.id
+JOIN categories c ON p.CategoryID = c.id;
+
+10. Create a report that shows the OrderlD ContactName, UnitPrice, Quantity, Discount from the order details, orders and customers table with discount given on every purchase.
+SELECT o.id AS OrderID, c.ContactName, od.UnitPrice, od.Quantity, od.Discount
+FROM order_details od
+JOIN orders o ON od.OrderID = o.id
+JOIN customers c ON o.CustomerID = c.id;
